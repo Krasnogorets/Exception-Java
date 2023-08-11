@@ -29,19 +29,19 @@ import java.util.*;
 
 
 public class final_hh {
-    public static String secondName= null;
+    public static String secondName = null;
 
 
     public static void main(String[] args) throws Exception {
         boolean flag = true;
-               Scanner scan = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         String[] arr = null;
         while (flag) {
             System.out.println("Форматы данных:" + "\n" +
-                    "- фамилия, имя, отчество " +"\n" +
-                    "- строки датарождения - строка формата dd.mm.yyyy " +"\n" +
-                    "- номертелефона - целое беззнаковое число без форматирования " +"\n" +
-                    "- пол - символ латиницей f или m."+"\n");
+                    "- фамилия, имя, отчество " + "\n" +
+                    "- строки датарождения - строка формата dd.mm.yyyy " + "\n" +
+                    "- номертелефона - целое беззнаковое число без форматирования " + "\n" +
+                    "- пол - символ латиницей f или m." + "\n");
             System.out.println("Введите данные в произвольном порядке, разделенные пробелом\n" +
                     "Фамилия Имя Отчество датарождения номертелефона пол:" + "\n");
             String drawString = scan.nextLine();
@@ -60,33 +60,25 @@ public class final_hh {
             }
         }
 
-        String path="data.txt";
-//        String fileName=secondName;
         StringBuilder sb = stringParser(arr);
-        StringBuilder fileName = new StringBuilder();
-        fileName.append(secondName);
-        fileName.append(".txt");
-        System.out.println(sb);
-        System.out.println(fileName);
-        Service(sb,path,fileName.toString());
-
+        String fileName = secondName + ".txt";
+        Service(sb, fileName);
     }
 
-    public static void Service (StringBuilder sb, String path,String fileName) throws IOException {
+    public static void Service(StringBuilder sb, String fileName) throws IOException {
         File file = new File(fileName);
-        if (file.createNewFile()){
+        if (file.createNewFile()) {
             System.out.println("File is created!");
-            try (FileWriter writer = new FileWriter(fileName)){
+            try (FileWriter writer = new FileWriter(fileName)) {
                 writer.write(String.valueOf(sb));
-            }catch (FileNotFoundException e){
+            } catch (FileNotFoundException e) {
                 System.out.println(e);
             }
-        }
-        else{
+        } else {
             System.out.println("File already exists.");
-            try (FileWriter writer = new FileWriter(fileName,true)){
-                writer.write(String.valueOf(sb)+"\n");
-            }catch (IOException e){
+            try (FileWriter writer = new FileWriter(fileName, true)) {
+                writer.write(String.valueOf(sb));
+            } catch (IOException e) {
                 System.out.println(e);
             }
         }
@@ -101,12 +93,6 @@ public class final_hh {
         }
         return err;
     }
-
-//    public static void printArray(String[] arr) {
-//        for (String s : arr) {
-//            System.out.print(s + ";");
-//        }
-//    }
 
     public static StringBuilder stringParser(String[] arr) throws Exception {
 
@@ -123,7 +109,7 @@ public class final_hh {
                 countString = 0;
             }
             if (checkInteger(temp)) {
-                if (temp.length() < 5 || temp.length() > 10) {
+                if (temp.length() <= 4 || temp.length() > 10) {
                     throw new WrongPhoneNumber(temp.length());
                 } else {
                     if (phone == null) {
@@ -222,7 +208,7 @@ public class final_hh {
             return false;
         }
         if (temp.contains("/")) {
-            throw new WrongDataFormat(temp,0);
+            throw new WrongDataFormat(temp, 0);
         }
         if (!temp.contains(".")) {
             return false;
@@ -261,7 +247,7 @@ public class final_hh {
 
     public static StringBuilder fillResultList(String[] arr,
                                                String secondName, String firstName, String thirdName,
-                                               String date, Integer phone, Character gender, int countStringMax)  {
+                                               String date, Integer phone, Character gender, int countStringMax) {
         int countString1 = 0;
         if (secondName == null || firstName == null || thirdName == null) {
             for (String temp : arr) {
@@ -273,22 +259,20 @@ public class final_hh {
                 throw new WrongStringOrder(countStringMax);
             }
         }
-            if (secondName == null) throw new NullSecondName();
-            if (firstName == null) throw new NullFirstName();
-            if (thirdName == null) throw new NullThirdName();
-            if (date == null) throw new NullDateException();
-            if (phone == null) throw new NullPhoneNumber();
-            if (gender == null) throw new NullGender();
-            StringBuilder sb = new StringBuilder();
-            sb.append("<").append(secondName).append(">");
-            sb.append("<").append(firstName).append(">");
-            sb.append("<").append(thirdName).append(">");
-            sb.append("<").append(date).append(">");
-            sb.append("<").append(phone).append(">");
-            sb.append("<").append(gender).append(">");
-            sb.append("\n");
-            return sb;
-        }
-
-
+        if (secondName == null) throw new NullSecondName();
+        if (firstName == null) throw new NullFirstName();
+        if (thirdName == null) throw new NullThirdName();
+        if (date == null) throw new NullDateException();
+        if (phone == null) throw new NullPhoneNumber();
+        if (gender == null) throw new NullGender();
+        StringBuilder sb = new StringBuilder();
+        sb.append("<").append(secondName).append(">");
+        sb.append("<").append(firstName).append(">");
+        sb.append("<").append(thirdName).append(">");
+        sb.append("<").append(date).append(">");
+        sb.append("<").append(phone).append(">");
+        sb.append("<").append(gender).append(">");
+        sb.append("\n");
+        return sb;
+    }
 }
