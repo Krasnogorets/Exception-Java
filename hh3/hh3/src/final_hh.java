@@ -130,7 +130,7 @@ public class final_hh {
                     }
                 }
                 String[] rawData1 = temp.split("[/.]");
-                if (Integer.parseInt(rawData1[0]) < 1 || Integer.parseInt(rawData1[0]) > 12) {
+                if (Integer.parseInt(rawData1[0]) < 1 || Integer.parseInt(rawData1[0]) > 31) {
                     throw new WrongMonthData(Integer.parseInt(rawData1[0]));
                 } else if (Integer.parseInt(rawData1[1]) < 1 || Integer.parseInt(rawData1[1]) > 12) {
                     throw new WrongDateData(Integer.parseInt(rawData1[1]));
@@ -186,7 +186,7 @@ public class final_hh {
             }
         }
 
-        return fillResultList(arr, secondName, firstName,
+        return fillResultList(arr, firstName,
                 thirdName, date, phone, gender, countStringMax);
     }
 
@@ -245,17 +245,17 @@ public class final_hh {
         return true;
     }
 
-    public static StringBuilder fillResultList(String[] arr,
-                                               String secondName, String firstName, String thirdName,
+    public static StringBuilder fillResultList(String[] arr, String firstName, String thirdName,
                                                String date, Integer phone, Character gender, int countStringMax) {
         int countString1 = 0;
         if (secondName == null || firstName == null || thirdName == null) {
+            System.out.println("double checking");
             for (String temp : arr) {
                 if (checkString(temp)) {
                     countString1++;
                 }
             }
-            if (countString1 != countStringMax) {
+            if (countString1 < 3) {
                 throw new WrongStringOrder(countStringMax);
             }
         }
